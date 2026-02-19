@@ -8,10 +8,13 @@ import { ApiResponse } from '@modules/network/domain/network.model';
 class ProductService implements ProductRepository {
   async getAll() {
     try {
-      const result = await axiosService.get<ProductResponse[]>(
+      const result = await axiosService.get<ApiResponse<ProductResponse[]>>(
         API_ROUTES.PRODUCTS,
       );
-      return result.data;
+      if (result.data.data) {
+        return result.data.data;
+      }
+      return new Error('No products found');
     } catch (error) {
       return manageAxiosError(error);
     }
