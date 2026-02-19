@@ -20,6 +20,9 @@
       ],
       "@theme/*": [
         "src/theme/*"
+      ],
+      "@test-utils": [
+        "jest/test-utils"
       ]
     }
   },

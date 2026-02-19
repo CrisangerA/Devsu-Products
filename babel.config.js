@@ -12,6 +12,7 @@ module.exports = {
           '@modules': './src/modules',
           '@providers': './src/providers',
           '@theme': './src/theme',
+          '@test-utils': './jest/test-utils',
         },
       },
     ],
