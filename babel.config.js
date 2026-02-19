@@ -10,6 +10,7 @@ module.exports = {
           '@components': './src/components',
           '@config': './src/config',
           '@modules': './src/modules',
+          '@navigation': './src/navigation',
           '@providers': './src/providers',
           '@theme': './src/theme',
           '@test-utils': './jest/test-utils',

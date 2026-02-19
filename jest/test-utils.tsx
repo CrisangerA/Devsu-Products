@@ -4,6 +4,7 @@ import { render, RenderOptions } from '@testing-library/react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ThemeProvider from '@theme/providers/ThemeProvider';
+import { NavigationContainer } from '@react-navigation/native';
 
 const AllTheProviders = ({ children }: PropsWithChildren) => {
   const queryClient = new QueryClient({
@@ -25,7 +26,7 @@ const AllTheProviders = ({ children }: PropsWithChildren) => {
             insets: { top: 0, left: 0, right: 0, bottom: 0 },
           }}
         >
-          {children}
+          <NavigationContainer>{children}</NavigationContainer>
         </SafeAreaProvider>
       </ThemeProvider>
     </QueryClientProvider>

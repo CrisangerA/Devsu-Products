@@ -8,7 +8,7 @@
 import { StatusBar, useColorScheme } from 'react-native';
 
 import AppProvider from '@providers/AppProvider';
-import ProductsListView from '@modules/products/ui/views/ProductsListView';
+import RootNavigation from '@navigation/RootNavigation';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -16,7 +16,7 @@ function App() {
   return (
     <AppProvider>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ProductsListView />
+      <RootNavigation />
     </AppProvider>
   );
 }

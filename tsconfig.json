@@ -15,6 +15,9 @@
       "@modules/*": [
         "src/modules/*"
       ],
+      "@navigation/*": [
+        "src/navigation/*"
+      ],
       "@providers/*": [
         "src/providers/*"
       ],
