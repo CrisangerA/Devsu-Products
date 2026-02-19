@@ -1,7 +1,6 @@
 import productService from '@modules/products/infrastructure/product.service';
 import axiosService from '@modules/network/infrastructure/axios.service';
 import { MOCK_PRODUCTS } from '@modules/products/infrastructure/product-mock.service';
-
 jest.mock('@modules/network/infrastructure/axios.service');
 
 const mockProduct = MOCK_PRODUCTS[0];
@@ -20,7 +19,7 @@ describe('ProductService', () => {
   describe('getAll', () => {
     it('returns products on success', async () => {
       (axiosService.get as jest.Mock).mockResolvedValue({
-        data: MOCK_PRODUCTS,
+        data: { data: MOCK_PRODUCTS },
       });
 
       const result = await productService.getAll();
