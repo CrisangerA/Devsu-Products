@@ -9,6 +9,8 @@ const AllTheProviders = ({ children }: PropsWithChildren) => {
     defaultOptions: {
       queries: {
         retry: false,
+        staleTime: 0,
+        gcTime: 0,
       },
     },
   });
