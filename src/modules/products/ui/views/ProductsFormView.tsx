@@ -4,14 +4,19 @@ import { Text } from '@components/core';
 import ProductsForm from '../components/ProductsForm/ProductsForm';
 import { ScrollView, StyleSheet } from 'react-native';
 import { spacing } from '@theme/spacing';
+import { RouteProp } from '@react-navigation/native';
+import { ProductsStackParamsList } from '@navigation/config/routes';
 
-export default function ProductsFormView() {
+type ProductsFormViewProps = {
+  route: RouteProp<ProductsStackParamsList, 'Form'>;
+};
+export default function ProductsFormView({ route }: ProductsFormViewProps) {
   return (
     <RootLayout>
       <ScrollView contentContainerStyle={styles.root}>
         <Text variant="h3">Formulario de Registro</Text>
 
-        <ProductsForm />
+        <ProductsForm product={route.params?.product} />
       </ScrollView>
     </RootLayout>
   );

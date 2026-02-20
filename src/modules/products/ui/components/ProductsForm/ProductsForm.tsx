@@ -6,7 +6,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@components/core';
 import { DatePicker, TextInput } from '@components/form';
 // Hooks
-import { useProductMutationCreate } from '@modules/products/application/product.mutation';
+import {
+  useProductMutationCreate,
+  useProductMutationUpdate,
+} from '@modules/products/application/product.mutation';
 // Theme
 import { spacing } from '@theme/spacing';
 
@@ -15,21 +18,57 @@ import {
   RegisterUserSchemaType,
 } from '@modules/products/domain/product.scheme';
 import { useNavigationProducts } from '@navigation/hooks/useNavigation';
+import { Product } from '@modules/products/domain/product.model';
+import { ProductsRoutes } from '@navigation/config/routes';
 
-export default function ProductsForm() {
+interface ProductsForm {
+  product?: Product;
+}
+
+export default function ProductsForm({ product }: ProductsForm) {
   const { control, handleSubmit, setError } = useForm<RegisterUserSchemaType>({
     resolver: zodResolver(ProductSchema),
     defaultValues: {
-      id: '',
-      name: '',
-      description: '',
-      logo: '',
+      id: product?.id || '',
+      name: product?.name || '',
+      description: product?.description || '',
+      logo: product?.logo || '',
+      releaseDate: product?.releaseDate
+        ? new Date(product?.releaseDate || '')
+        : undefined,
+      revisionDate: product?.revisionDate
+        ? new Date(product?.revisionDate || '')
+        : undefined,
     },
   });
-  const { goBack } = useNavigationProducts();
+  const { goBack, popTo } = useNavigationProducts();
   const { mutate: createProduct } = useProductMutationCreate();
+  const { mutate: updateProduct } = useProductMutationUpdate();
 
   function onSubmit(form: RegisterUserSchemaType) {
+    if (product?.id) {
+      updateProduct(
+        {
+          ...form,
+          date_release: new Date(form.releaseDate),
+          date_revision: new Date(form.revisionDate),
+        },
+        {
+          onSuccess: data => {
+            popTo(ProductsRoutes.Detail, {
+              product: {
+                ...data,
+                releaseDate: data.date_release,
+                revisionDate: data.date_revision,
+              },
+            });
+          },
+          onError: handleFormErrors,
+        },
+      );
+      return;
+    }
+
     createProduct(
       {
         ...form,
@@ -65,7 +104,13 @@ export default function ProductsForm() {
 
   return (
     <View style={styles.container}>
-      <TextInput control={control} name="id" placeholder="ID" label="ID" />
+      <TextInput
+        control={control}
+        name="id"
+        placeholder="ID"
+        label="ID"
+        editable={!product?.id}
+      />
       <TextInput
         control={control}
         name="name"

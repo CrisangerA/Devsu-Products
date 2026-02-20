@@ -19,13 +19,31 @@ export function useProductMutationCreate() {
 }
 
 export function useProductMutationUpdate() {
+  const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: productService.update,
+    mutationFn: async (product: ProductResponse) => {
+      const result = await productService.update(product);
+      if (result instanceof Error) {
+        throw result;
+      }
+
+      await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.PRODUCTS });
+      return result;
+    },
   });
 }
 
 export function useProductMutationDelete() {
+  const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: productService.delete,
+    mutationFn: async (id: string) => {
+      const result = await productService.delete(id);
+      if (result instanceof Error) {
+        throw result;
+      }
+
+      await queryClient.invalidateQueries({ queryKey: QUERY_KEYS.PRODUCTS });
+      return result;
+    },
   });
 }

@@ -1,15 +1,21 @@
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Pressable } from 'react-native';
 import React from 'react';
 import { Product } from '@modules/products/domain/product.model';
 import { Text } from '@components/core';
 import { borderRadius } from '@theme/borders';
+import { useNavigationProducts } from '@navigation/hooks/useNavigation';
+import { ProductsRoutes } from '@navigation/config/routes';
 
 interface ProductItemProps {
   product: Product;
 }
 export default function ProductItem({ product }: ProductItemProps) {
+  const navigation = useNavigationProducts();
   return (
-    <View style={styles.root}>
+    <Pressable
+      style={styles.root}
+      onPress={() => navigation.navigate(ProductsRoutes.Detail, { product })}
+    >
       <View>
         <Text variant="body">{product.name}</Text>
         <Text variant="body">{product.id}</Text>
@@ -17,7 +23,7 @@ export default function ProductItem({ product }: ProductItemProps) {
       <View>
         <Text variant="body">👉🏼</Text>
       </View>
-    </View>
+    </Pressable>
   );
 }
 
