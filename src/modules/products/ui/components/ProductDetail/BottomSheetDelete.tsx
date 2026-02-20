@@ -46,14 +46,16 @@ export const BottomSheetDelete = forwardRef<
       ref={ref}
       index={-1}
       enablePanDownToClose
-      snapPoints={['1%', '37%', '40%']}
+      snapPoints={['1%', '35%', '37%']}
       backdropComponent={renderBackdrop}
       handleComponent={handleComponent}
     >
       <BottomSheetView style={styles.root}>
-        <Text align="center">
-          ¿Estás seguro de eliminar el producto {name}?
-        </Text>
+        <View style={styles.title}>
+          <Text align="center">
+            ¿Estás seguro de eliminar el producto {name}?
+          </Text>
+        </View>
         <View style={styles.actions}>
           <Button
             title={isLoading ? 'Eliminando...' : 'Confirmar'}
@@ -80,14 +82,16 @@ const styles = StyleSheet.create({
     paddingTop: spacing.lg,
     borderTopLeftRadius: spacing.lg,
     borderTopRightRadius: spacing.lg,
+  },
+  title: {
     paddingHorizontal: spacing.lg,
   },
   actions: {
     gap: spacing.md,
-    borderTopWidth: 1,
+    paddingHorizontal: spacing.lg,
+    borderTopWidth: 0.5,
     borderTopColor: colors.light.border,
     flex: 1,
-    paddingBottom: spacing.lg,
     paddingTop: spacing.md,
   },
 });

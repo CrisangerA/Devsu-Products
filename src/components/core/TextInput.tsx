@@ -106,7 +106,7 @@ export const TextInput = forwardRef<RNTextInput, TextInputProps>(
         {label && (
           <Text
             variant="bodySmall"
-            color={hasError ? 'error' : isFocused ? 'primary' : 'textSecondary'}
+            color={hasError ? 'error' : isFocused ? 'text' : 'textSecondary'}
             style={labelStyles}
           >
             {label}

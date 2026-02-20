@@ -5,7 +5,7 @@ import { borderRadius, BorderRadiusToken } from '../borders';
 import { typography } from '../typography';
 import { hScale } from '../responsive';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'outlined' | 'ghost';
+export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'ghost';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 interface ButtonStyleProps {
@@ -56,7 +56,7 @@ function getVariantStyles(
           opacity,
         },
         text: {
-          color: '#FFFFFF',
+          color: themeColors.text,
         },
       };
 
@@ -64,8 +64,6 @@ function getVariantStyles(
       return {
         container: {
           backgroundColor: themeColors.surface,
-          borderWidth: 1,
-          borderColor: themeColors.border,
           opacity,
         },
         text: {
@@ -73,16 +71,14 @@ function getVariantStyles(
         },
       };
 
-    case 'outlined':
+    case 'danger':
       return {
         container: {
-          backgroundColor: 'transparent',
-          borderWidth: 1.5,
-          borderColor: themeColors.primary,
+          backgroundColor: themeColors.error,
           opacity,
         },
         text: {
-          color: themeColors.primary,
+          color: themeColors.background,
         },
       };
 
@@ -112,7 +108,7 @@ export function getButtonStyle({
   mode = 'light',
   disabled = false,
   fullWidth = false,
-  borderRadius: borderRadiusToken = 'md',
+  borderRadius: borderRadiusToken = 'sm',
 }: ButtonStyleProps): { container: ViewStyle; text: TextStyle } {
   const themeColors = colors[mode];
   const sizeConfig = getSizeStyles(size);

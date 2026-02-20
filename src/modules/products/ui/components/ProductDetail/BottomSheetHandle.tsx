@@ -18,7 +18,7 @@ export default function BottomSheetHandle({ onPress }: Props) {
 
 const styles = StyleSheet.create({
   root: {
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.5,
     borderBottomColor: colors.light.border,
     alignItems: 'flex-end',
   },

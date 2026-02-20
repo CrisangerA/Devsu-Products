@@ -1,9 +1,12 @@
+import commonStyles from '@theme/common';
+import { useTheme } from '@theme/index';
 import React, { PropsWithChildren } from 'react';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export function SafeAreaView({ children }: PropsWithChildren) {
   const insets = useSafeAreaInsets();
+  const { colors } = useTheme();
   return (
     <View
       style={{
@@ -11,7 +14,8 @@ export function SafeAreaView({ children }: PropsWithChildren) {
         paddingBottom: insets.bottom,
         paddingLeft: insets.left,
         paddingRight: insets.right,
-        flex: 1,
+        ...commonStyles.flex,
+        backgroundColor: colors.background,
       }}
     >
       {children}

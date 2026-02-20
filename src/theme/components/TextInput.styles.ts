@@ -158,7 +158,7 @@ export function getLabelStyle(
 
   if (state === 'focus') {
     return {
-      color: themeColors.primary,
+      color: themeColors.text,
       fontSize: typography.bodySmall.fontSize,
       fontWeight: '500',
       marginBottom: spacing.xs,

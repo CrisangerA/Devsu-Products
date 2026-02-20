@@ -18,7 +18,9 @@ export default function ProductItem({ product }: ProductItemProps) {
     >
       <View>
         <Text variant="body">{product.name}</Text>
-        <Text variant="body">{product.id}</Text>
+        <Text variant="body" color="textSecondary">
+          ID: {product.id}
+        </Text>
       </View>
       <View>
         <Text variant="body">👉🏼</Text>

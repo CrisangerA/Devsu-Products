@@ -20,8 +20,8 @@ export function getTextStyle({
   decoration,
 }: TextStyleProps) {
   return {
-    color: colors[mode][color],
     ...typography[variant],
+    color: colors[mode][color],
     ...(align && { textAlign: align }),
     ...(transform && { textTransform: transform }),
     ...(decoration && { textDecorationLine: decoration }),

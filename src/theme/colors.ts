@@ -52,18 +52,21 @@ export interface Colors {
  */
 const lightColors: Colors = {
   background: '#FFFFFF',
-  surface: '#F8FAFC',
-  border: '#E2E8F0',
-  text: '#0F172A',
+  surface: '#e9ecf3',
+  border: '#94979bff',
+  text: '#2c2c30;',
   textSecondary: '#64748B',
-  primary: '#3B82F6',
+  primary: '#FFD60A',
   success: '#10B981',
   warning: '#F59E0B',
-  error: '#EF4444',
-  info: '#3B82F6',
+  error: '#DC2626',
+  info: '#1E3A8A',
+  //disabled: '#f6f6f6',
+  //border: '#e0e0e0',
+  // borderHeader: '#e3e7ef
 };
 
-/**
+/*
  * Colores para el tema oscuro
  */
 const darkColors: Colors = {

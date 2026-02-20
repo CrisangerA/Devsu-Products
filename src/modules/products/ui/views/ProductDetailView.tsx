@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { RouteProp } from '@react-navigation/native';
 import { Image, StyleSheet, View } from 'react-native';
@@ -21,41 +21,48 @@ type ProductDetailViewProps = {
   route: RouteProp<ProductsStackParamsList, 'Detail'>;
 };
 
+const DEFAULT_LOGO =
+  'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg';
 export default function ProductDetailView({ route }: ProductDetailViewProps) {
   const { navigate, goBack } = useNavigationProducts();
   const { mutate: deleteProduct, isPending } = useProductMutationDelete();
   const bottomSheetRef = useRef<BottomSheet>(null);
+
+  const { product } = route.params;
+
+  const logo = useMemo(
+    () => (product.logo.includes('http') ? product.logo : DEFAULT_LOGO),
+    [product.logo],
+  );
 
   return (
     <RootLayout>
       <View style={styles.root}>
         <View style={styles.gap}>
           <View style={{ marginBottom: spacing.lg }}>
-            <Text variant="h3">ID: {route.params.product.id}</Text>
-            <Text variant="body">Información extra</Text>
+            <Text variant="h3">ID: {product.id}</Text>
+            <Text variant="body" color="textSecondary">
+              Información extra
+            </Text>
           </View>
-          <Row label="Nombre" value={route.params.product.name} />
-          <Row label="Descripción" value={route.params.product.description} />
-          <Row label="Logo" value={route.params.product.logo} />
+          <Row label="Nombre" value={product.name} />
+          <Row label="Descripción" value={product.description} />
+          <Row label="Logo" />
           <View>
             <Image
               source={{
-                uri: 'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
+                uri: logo,
               }}
               style={styles.logo}
             />
           </View>
           <Row
             label="Fecha de lanzamiento"
-            value={new Date(
-              route.params.product.releaseDate,
-            ).toLocaleDateString()}
+            value={new Date(product.releaseDate).toLocaleDateString()}
           />
           <Row
             label="Fecha de revisión"
-            value={new Date(
-              route.params.product.revisionDate,
-            ).toLocaleDateString()}
+            value={new Date(product.revisionDate).toLocaleDateString()}
           />
         </View>
         <View style={styles.gap}>
@@ -64,24 +71,24 @@ export default function ProductDetailView({ route }: ProductDetailViewProps) {
             variant="secondary"
             onPress={() =>
               navigate(ProductsRoutes.Form, {
-                product: route.params.product,
+                product: product,
               })
             }
           />
           <Button
             title="Eliminar"
-            variant="outlined"
             onPress={() => bottomSheetRef.current?.expand()}
+            variant="danger"
           />
         </View>
       </View>
       <BottomSheetDelete
         ref={bottomSheetRef}
-        name={route.params.product.name}
+        name={product.name}
         isLoading={isPending}
         onCancel={() => bottomSheetRef.current?.close()}
         onConfirm={() =>
-          deleteProduct(route.params.product.id, {
+          deleteProduct(product.id, {
             onSuccess: goBack,
           })
         }
@@ -90,11 +97,13 @@ export default function ProductDetailView({ route }: ProductDetailViewProps) {
   );
 }
 
-function Row({ label, value }: { label: string; value: string }) {
+function Row({ label, value }: { label: string; value?: string }) {
   return (
     <View style={styles.row}>
-      <Text>{label}:</Text>
-      <Text>{value}</Text>
+      <Text variant="body" color="textSecondary">
+        {label}
+      </Text>
+      {value && <Text variant="body">{value}</Text>}
     </View>
   );
 }
@@ -108,8 +117,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   logo: {
-    width: '100%',
-    height: 200,
+    width: '80%',
+    aspectRatio: '4/3',
+    resizeMode: 'contain',
+    alignSelf: 'center',
   },
   row: {
     flexDirection: 'row',
