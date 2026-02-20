@@ -15,3 +15,12 @@ export interface Product {
   releaseDate: Date;
   revisionDate: Date;
 }
+
+export interface ProductForm {
+  id: string;
+  name: string;
+  description: string;
+  logo: string;
+  releaseDate: Date;
+  revisionDate: Date;
+}

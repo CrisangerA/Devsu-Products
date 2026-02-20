@@ -4,4 +4,6 @@ export const AXIOS_MESSAGES = {
   CONNECTION_REFUSED:
     'El servicio no está disponible en este momento. Por favor, vuelve a intentarlo más tarde.',
   UNKNOWN_ERROR: 'Ocurrió un error inesperado. Por favor, inténtalo de nuevo.',
+  BAD_REQUEST:
+    'Solicitud incorrecta. Por favor, verifica los datos ingresados.',
 };

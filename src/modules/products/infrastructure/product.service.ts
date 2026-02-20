@@ -28,11 +28,18 @@ class ProductService implements ProductRepository {
   }
 
   async create(product: ProductResponse) {
-    const result = await axiosService.post<ApiResponse<ProductResponse>>(
-      API_ROUTES.PRODUCTS,
-      product,
-    );
-    return result.data.data as ProductResponse;
+    try {
+      const result = await axiosService.post<ApiResponse<ProductResponse>>(
+        API_ROUTES.PRODUCTS,
+        product,
+      );
+      if (result.data.data) {
+        return result.data.data;
+      }
+      return new Error('Product not created');
+    } catch (error) {
+      return manageAxiosError(error);
+    }
   }
 
   async update(product: ProductResponse) {
