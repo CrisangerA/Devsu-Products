@@ -23,7 +23,7 @@ type ProductDetailViewProps = {
 
 export default function ProductDetailView({ route }: ProductDetailViewProps) {
   const { navigate, goBack } = useNavigationProducts();
-  const { mutate: deleteProduct } = useProductMutationDelete();
+  const { mutate: deleteProduct, isPending } = useProductMutationDelete();
   const bottomSheetRef = useRef<BottomSheet>(null);
 
   return (
@@ -78,6 +78,7 @@ export default function ProductDetailView({ route }: ProductDetailViewProps) {
       <BottomSheetDelete
         ref={bottomSheetRef}
         name={route.params.product.name}
+        isLoading={isPending}
         onCancel={() => bottomSheetRef.current?.close()}
         onConfirm={() =>
           deleteProduct(route.params.product.id, {

@@ -26,6 +26,8 @@ interface ProductsForm {
 }
 
 export default function ProductsForm({ product }: ProductsForm) {
+  const { goBack, popTo } = useNavigationProducts();
+
   const { control, handleSubmit, setError } = useForm<RegisterUserSchemaType>({
     resolver: zodResolver(ProductSchema),
     defaultValues: {
@@ -41,9 +43,13 @@ export default function ProductsForm({ product }: ProductsForm) {
         : undefined,
     },
   });
-  const { goBack, popTo } = useNavigationProducts();
-  const { mutate: createProduct } = useProductMutationCreate();
-  const { mutate: updateProduct } = useProductMutationUpdate();
+
+  const { mutate: createProduct, isPending: isCreating } =
+    useProductMutationCreate();
+  const { mutate: updateProduct, isPending: isUpdating } =
+    useProductMutationUpdate();
+
+  const isLoading = isCreating || isUpdating;
 
   function onSubmit(form: RegisterUserSchemaType) {
     if (product?.id) {
@@ -143,9 +149,16 @@ export default function ProductsForm({ product }: ProductsForm) {
       />
 
       <View style={styles.actions}>
-        <Button title="Enviar" onPress={handleSubmit(onSubmit)} />
+        <Button
+          loading={isLoading}
+          title={
+            isLoading ? 'Guardando...' : product?.id ? 'Actualizar' : 'Enviar'
+          }
+          onPress={handleSubmit(onSubmit)}
+          disabled={isLoading}
+        />
 
-        <Button title="Reiniciar" variant="secondary" />
+        <Button title="Reiniciar" variant="secondary" disabled={isLoading} />
       </View>
     </View>
   );

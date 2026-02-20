@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@test-utils';
-import ProductsSearch from '@modules/products/ui/components/ProductsSearch';
+import ProductsSearch from '@modules/products/ui/components/ProductsList/ProductsSearch';
 
 describe('ProductsSearch', () => {
   it('renders correctly', () => {

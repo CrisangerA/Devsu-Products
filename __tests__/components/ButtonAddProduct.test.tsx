@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@test-utils';
-import ButtonAddProduct from '@modules/products/ui/components/ButtonAddProduct';
+import ButtonAddProduct from '@modules/products/ui/components/ProductsList/ButtonAddProduct';
 
 describe('ButtonAddProduct', () => {
   it('renders correctly', () => {

@@ -4,10 +4,12 @@ import { ProductRepository } from '../domain/product.repository';
 import { API_ROUTES } from '@config/api.routes';
 import { manageAxiosError } from '@modules/network/domain/network.error';
 import { ApiResponse } from '@modules/network/domain/network.model';
+import { simulateNetworkRequest } from '@modules/network/domain/network.utils';
 
 class ProductService implements ProductRepository {
   async getAll() {
     try {
+      await simulateNetworkRequest();
       const result = await axiosService.get<ApiResponse<ProductResponse[]>>(
         API_ROUTES.PRODUCTS,
       );
@@ -21,14 +23,20 @@ class ProductService implements ProductRepository {
   }
 
   async getOne(id: string) {
-    const result = await axiosService.get<ProductResponse>(
-      `${API_ROUTES.PRODUCTS}/${id}`,
-    );
-    return result.data;
+    try {
+      await simulateNetworkRequest();
+      const result = await axiosService.get<ProductResponse>(
+        `${API_ROUTES.PRODUCTS}/${id}`,
+      );
+      return result.data;
+    } catch (error) {
+      return manageAxiosError(error);
+    }
   }
 
   async create(product: ProductResponse) {
     try {
+      await simulateNetworkRequest();
       const result = await axiosService.post<ApiResponse<ProductResponse>>(
         API_ROUTES.PRODUCTS,
         product,
@@ -43,18 +51,28 @@ class ProductService implements ProductRepository {
   }
 
   async update(product: ProductResponse) {
-    const result = await axiosService.put<ApiResponse<ProductResponse>>(
-      `${API_ROUTES.PRODUCTS}/${product.id}`,
-      product,
-    );
-    return result.data.data as ProductResponse;
+    try {
+      await simulateNetworkRequest();
+      const result = await axiosService.put<ApiResponse<ProductResponse>>(
+        `${API_ROUTES.PRODUCTS}/${product.id}`,
+        product,
+      );
+      return result.data.data as ProductResponse;
+    } catch (error) {
+      return manageAxiosError(error);
+    }
   }
 
   async delete(id: string) {
-    await axiosService.delete<ApiResponse<ProductResponse>>(
-      `${API_ROUTES.PRODUCTS}/${id}`,
-    );
-    return true;
+    try {
+      await simulateNetworkRequest();
+      await axiosService.delete<ApiResponse<ProductResponse>>(
+        `${API_ROUTES.PRODUCTS}/${id}`,
+      );
+      return true;
+    } catch (error) {
+      return manageAxiosError(error);
+    }
   }
 }
 

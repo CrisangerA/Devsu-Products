@@ -14,6 +14,7 @@ import BottomSheetHandle from './BottomSheetHandle';
 
 interface BottomSheetDeleteProps {
   name: string;
+  isLoading: boolean;
   onConfirm: () => void;
   onCancel: () => void;
 }
@@ -21,7 +22,7 @@ interface BottomSheetDeleteProps {
 export const BottomSheetDelete = forwardRef<
   BottomSheet,
   BottomSheetDeleteProps
->(({ name, onConfirm, onCancel }, ref) => {
+>(({ name, isLoading, onConfirm, onCancel }, ref) => {
   // Renders
   const handleComponent = useCallback(
     () => <BottomSheetHandle onPress={onCancel} />,
@@ -54,8 +55,18 @@ export const BottomSheetDelete = forwardRef<
           ¿Estás seguro de eliminar el producto {name}?
         </Text>
         <View style={styles.actions}>
-          <Button title="Confirmar" onPress={onConfirm} />
-          <Button title="Cancelar" variant="secondary" onPress={onCancel} />
+          <Button
+            title={isLoading ? 'Eliminando...' : 'Confirmar'}
+            onPress={onConfirm}
+            loading={isLoading}
+            disabled={isLoading}
+          />
+          <Button
+            title="Cancelar"
+            variant="secondary"
+            onPress={onCancel}
+            disabled={isLoading}
+          />
         </View>
       </BottomSheetView>
     </BottomSheet>
@@ -69,14 +80,14 @@ const styles = StyleSheet.create({
     paddingTop: spacing.lg,
     borderTopLeftRadius: spacing.lg,
     borderTopRightRadius: spacing.lg,
+    paddingHorizontal: spacing.lg,
   },
   actions: {
     gap: spacing.md,
     borderTopWidth: 1,
     borderTopColor: colors.light.border,
     flex: 1,
-    paddingHorizontal: spacing.lg,
-    paddingBottom: spacing.xl,
+    paddingBottom: spacing.lg,
     paddingTop: spacing.md,
   },
 });

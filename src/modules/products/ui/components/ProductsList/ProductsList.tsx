@@ -1,4 +1,4 @@
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 import React from 'react';
 import { useProductsQuery } from '@modules/products/application/product.queries';
 import ProductItem from './ProductItem';
@@ -6,30 +6,21 @@ import { borderRadius } from '@theme/borders';
 import { colors } from '@theme/colors';
 import ProductItemSeparator from './ProductItemSeparator';
 import { spacing } from '@theme/spacing';
+import ProductsSkeleton from './ProductsSkeleton';
+import ProductsError from './ProductsError';
+import ProductsEmpty from './ProductsEmpty';
 export default function ProductsList() {
   const { data = [], isLoading, error } = useProductsQuery();
   if (isLoading) {
-    return (
-      <View>
-        <Text>Loading...</Text>
-      </View>
-    );
+    return <ProductsSkeleton />;
   }
 
   if (error) {
-    return (
-      <View>
-        <Text>{error.message}</Text>
-      </View>
-    );
+    return <ProductsError message={error.message} />;
   }
 
   if (data.length === 0) {
-    return (
-      <View>
-        <Text>No products found</Text>
-      </View>
-    );
+    return <ProductsEmpty />;
   }
 
   return (
