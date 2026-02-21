@@ -2,6 +2,7 @@ import React, { useMemo, useRef } from 'react';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { RouteProp } from '@react-navigation/native';
 import { Image, StyleSheet, View } from 'react-native';
+import Animated, { FadeInUp } from 'react-native-reanimated';
 // Components
 import { RootLayout } from '@components/layout';
 import { Button, Text } from '@components/core';
@@ -39,33 +40,43 @@ export default function ProductDetailView({ route }: ProductDetailViewProps) {
     <RootLayout>
       <View style={styles.root}>
         <View style={styles.gap}>
-          <View style={{ marginBottom: spacing.lg }}>
+          <Animated.View entering={FadeInUp.duration(300)} style={{ marginBottom: spacing.lg }}>
             <Text variant="h3">ID: {product.id}</Text>
             <Text variant="body" color="textSecondary">
               Información extra
             </Text>
-          </View>
-          <Row label="Nombre" value={product.name} />
-          <Row label="Descripción" value={product.description} />
-          <Row label="Logo" />
-          <View>
+          </Animated.View>
+          <Animated.View entering={FadeInUp.delay(50).duration(300)}>
+            <Row label="Nombre" value={product.name} />
+          </Animated.View>
+          <Animated.View entering={FadeInUp.delay(100).duration(300)}>
+            <Row label="Descripción" value={product.description} />
+          </Animated.View>
+          <Animated.View entering={FadeInUp.delay(150).duration(300)}>
+            <Row label="Logo" />
+          </Animated.View>
+          <Animated.View entering={FadeInUp.delay(200).duration(300)}>
             <Image
               source={{
                 uri: logo,
               }}
               style={styles.logo}
             />
-          </View>
-          <Row
-            label="Fecha de lanzamiento"
-            value={new Date(product.releaseDate).toLocaleDateString()}
-          />
-          <Row
-            label="Fecha de revisión"
-            value={new Date(product.revisionDate).toLocaleDateString()}
-          />
+          </Animated.View>
+          <Animated.View entering={FadeInUp.delay(250).duration(300)}>
+            <Row
+              label="Fecha de lanzamiento"
+              value={new Date(product.releaseDate).toLocaleDateString()}
+            />
+          </Animated.View>
+          <Animated.View entering={FadeInUp.delay(300).duration(300)}>
+            <Row
+              label="Fecha de revisión"
+              value={new Date(product.revisionDate).toLocaleDateString()}
+            />
+          </Animated.View>
         </View>
-        <View style={styles.gap}>
+        <Animated.View entering={FadeInUp.delay(350).duration(300)} style={styles.gap}>
           <Button
             title="Editar"
             variant="secondary"
@@ -80,7 +91,7 @@ export default function ProductDetailView({ route }: ProductDetailViewProps) {
             onPress={() => bottomSheetRef.current?.expand()}
             variant="danger"
           />
-        </View>
+        </Animated.View>
       </View>
       <BottomSheetDelete
         ref={bottomSheetRef}
@@ -130,3 +141,4 @@ const styles = StyleSheet.create({
     gap: spacing.md,
   },
 });
+

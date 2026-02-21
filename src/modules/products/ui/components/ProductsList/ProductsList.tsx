@@ -42,7 +42,7 @@ export default function ProductsList({ searchQuery }: ProductsListProps) {
   return (
     <FlatList
       data={filteredProducts}
-      renderItem={({ item }) => <ProductItem product={item} />}
+      renderItem={({ item, index }) => <ProductItem product={item} index={index} />}
       ItemSeparatorComponent={ProductItemSeparator}
       keyExtractor={item => item.id}
       contentContainerStyle={styles.container}

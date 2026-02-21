@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import Animated, {
+  FadeOut,
   useSharedValue,
   useAnimatedStyle,
   withRepeat,
@@ -36,7 +37,7 @@ export default function ProductsSkeleton() {
   }));
 
   return (
-    <View style={styles.flatList}>
+    <Animated.View exiting={FadeOut.duration(200)} style={styles.flatList}>
       <View style={styles.container}>
         <Placeholder animatedStyle={animatedStyle} />
         <ProductItemSeparator />
@@ -46,7 +47,7 @@ export default function ProductsSkeleton() {
         <ProductItemSeparator />
         <Placeholder animatedStyle={animatedStyle} />
       </View>
-    </View>
+    </Animated.View>
   );
 }
 
