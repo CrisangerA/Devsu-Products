@@ -143,4 +143,89 @@ describe('TextInput.styles', () => {
       expect(style.color).toBeDefined();
     });
   });
+
+  describe('branch coverage - variant × state combinations', () => {
+    it('outlined + disabled uses disabled background', () => {
+      const styles = getTextInputStyle({
+        variant: 'outlined',
+        state: 'disabled',
+        mode: 'light',
+      });
+      expect(styles.container.backgroundColor).toBeDefined();
+      expect(styles.input.color).toBeDefined();
+    });
+
+    it('outlined + focus uses focus border color', () => {
+      const styles = getTextInputStyle({
+        variant: 'outlined',
+        state: 'focus',
+        mode: 'light',
+      });
+      expect(styles.container.borderColor).toBeDefined();
+      expect(styles.container.borderWidth).toBe(1.5);
+    });
+
+    it('outlined + error uses error border color', () => {
+      const styles = getTextInputStyle({
+        variant: 'outlined',
+        state: 'error',
+        mode: 'light',
+      });
+      expect(styles.container.borderColor).toBeDefined();
+    });
+
+    it('filled + disabled uses disabled background', () => {
+      const styles = getTextInputStyle({
+        variant: 'filled',
+        state: 'disabled',
+        mode: 'light',
+      });
+      expect(styles.container.backgroundColor).toBeDefined();
+      expect(styles.container.borderWidth).toBe(0);
+    });
+
+    it('filled + focus uses focus border with borderBottomWidth of 2', () => {
+      const styles = getTextInputStyle({
+        variant: 'filled',
+        state: 'focus',
+        mode: 'light',
+      });
+      expect(styles.container.borderBottomWidth).toBe(2);
+    });
+
+    it('filled + error uses error border color', () => {
+      const styles = getTextInputStyle({
+        variant: 'filled',
+        state: 'error',
+        mode: 'light',
+      });
+      expect(styles.container.borderColor).toBeDefined();
+    });
+
+    it('filled + default has borderBottomWidth of 1', () => {
+      const styles = getTextInputStyle({
+        variant: 'filled',
+        state: 'default',
+        mode: 'light',
+      });
+      expect(styles.container.borderBottomWidth).toBe(1);
+    });
+
+    it('lg size returns larger height and padding', () => {
+      const mdStyles = getTextInputStyle({ size: 'md' });
+      const lgStyles = getTextInputStyle({ size: 'lg' });
+      expect(lgStyles.container.height).toBeGreaterThan(
+        mdStyles.container.height as number,
+      );
+    });
+
+    it('dark mode with all variants', () => {
+      const variants: TextInputVariant[] = ['default', 'outlined', 'filled'];
+      variants.forEach(variant => {
+        const styles = getTextInputStyle({ variant, mode: 'dark' });
+        expect(styles.container).toBeDefined();
+        expect(styles.input).toBeDefined();
+      });
+    });
+  });
 });

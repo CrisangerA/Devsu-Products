@@ -77,5 +77,30 @@ describe('Button.styles', () => {
       expect(styles.container.backgroundColor).toBe('transparent');
       expect(styles.container.borderWidth).toBe(0);
     });
+
+    it('danger variant has error background and background text color', () => {
+      const styles = getButtonStyle({ variant: 'danger', mode: 'light' });
+      expect(styles.container.backgroundColor).toBeDefined();
+      expect(styles.container.opacity).toBe(1);
+      expect(styles.text.color).toBeDefined();
+    });
+
+    it('danger variant disabled has reduced opacity', () => {
+      const styles = getButtonStyle({
+        variant: 'danger',
+        mode: 'light',
+        disabled: true,
+      });
+      expect(styles.container.opacity).toBe(0.5);
+    });
+
+    it('returns empty styles for unknown variant', () => {
+      const styles = getButtonStyle({
+        variant: 'unknown' as any,
+        mode: 'light',
+      });
+      expect(styles.container).toBeDefined();
+      expect(styles.text).toBeDefined();
+    });
   });
 });

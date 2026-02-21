@@ -16,6 +16,7 @@ module.exports = {
     ease: () => {},
     quad: () => {},
     cubic: () => {},
+    out: () => () => {},
   },
   runOnUI: fn => fn,
   runOnJS: fn => fn,

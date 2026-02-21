@@ -1,4 +1,4 @@
-import { mmkvReviver } from '@config/storage';
+import { mmkvReviver, mmkvStorage, storage } from '@config/storage';
 
 jest.mock('react-native-mmkv', () => ({
   createMMKV: jest.fn(() => ({
@@ -8,6 +8,7 @@ jest.mock('react-native-mmkv', () => ({
     }),
     set: jest.fn(),
     delete: jest.fn(),
+    remove: jest.fn(),
     contains: jest.fn(),
     getAllKeys: jest.fn(() => []),
     clearAll: jest.fn(),
@@ -49,6 +50,31 @@ describe('storage', () => {
       const result = mmkvReviver('key', validDate);
 
       expect(result).toBeInstanceOf(Date);
+    });
+  });
+
+  describe('mmkvStorage', () => {
+    it('setItem calls storage.set', () => {
+      mmkvStorage.setItem('testKey', 'testValue');
+      expect(storage.set).toHaveBeenCalledWith('testKey', 'testValue');
+    });
+
+    it('getItem returns string value from storage', () => {
+      (storage.getString as jest.Mock).mockReturnValueOnce('storedValue');
+      const result = mmkvStorage.getItem('testKey');
+      expect(result).toBe('storedValue');
+      expect(storage.getString).toHaveBeenCalledWith('testKey');
+    });
+
+    it('getItem returns null when value is undefined', () => {
+      (storage.getString as jest.Mock).mockReturnValueOnce(undefined);
+      const result = mmkvStorage.getItem('missingKey');
+      expect(result).toBeNull();
+    });
+
+    it('removeItem calls storage.remove', () => {
+      mmkvStorage.removeItem('testKey');
+      expect(storage.remove).toHaveBeenCalledWith('testKey');
     });
   });
 });
