@@ -4,10 +4,24 @@ import { TextInput } from '@components/core';
 import { StyleSheet } from 'react-native';
 import { spacing } from '@theme/spacing';
 
-export default function ProductsSearch() {
+interface ProductsSearchProps {
+  value: string;
+  onSearch: (query: string) => void;
+}
+
+export default function ProductsSearch({
+  value,
+  onSearch,
+}: ProductsSearchProps) {
   return (
     <View style={styles.root}>
-      <TextInput variant="outlined" size="lg" placeholder="Search..." />
+      <TextInput
+        variant="outlined"
+        size="lg"
+        placeholder="Search..."
+        value={value}
+        onChangeText={onSearch}
+      />
     </View>
   );
 }

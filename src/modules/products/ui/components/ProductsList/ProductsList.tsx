@@ -1,16 +1,32 @@
+import React, { useMemo } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
-import React from 'react';
-import { useProductsQuery } from '@modules/products/application/product.queries';
+// Components
 import ProductItem from './ProductItem';
-import { borderRadius } from '@theme/borders';
-import { colors } from '@theme/colors';
-import ProductItemSeparator from './ProductItemSeparator';
-import { spacing } from '@theme/spacing';
-import ProductsSkeleton from './ProductsSkeleton';
 import ProductsError from './ProductsError';
 import ProductsEmpty from './ProductsEmpty';
-export default function ProductsList() {
+import ProductsSkeleton from './ProductsSkeleton';
+import ProductItemSeparator from './ProductItemSeparator';
+// Queries
+import { useProductsQuery } from '@modules/products/application/product.queries';
+// Theme
+import { colors } from '@theme/colors';
+import { spacing } from '@theme/spacing';
+import { borderRadius } from '@theme/borders';
+// Utils
+import { filterProducts } from '@modules/products/domain/product.utils';
+
+interface ProductsListProps {
+  searchQuery: string;
+}
+
+export default function ProductsList({ searchQuery }: ProductsListProps) {
   const { data = [], isLoading, error } = useProductsQuery();
+
+  const filteredProducts = useMemo(
+    () => filterProducts(searchQuery, data),
+    [data, searchQuery],
+  );
+
   if (isLoading) {
     return <ProductsSkeleton />;
   }
@@ -19,13 +35,13 @@ export default function ProductsList() {
     return <ProductsError message={error.message} />;
   }
 
-  if (data.length === 0) {
+  if (filteredProducts.length === 0) {
     return <ProductsEmpty />;
   }
 
   return (
     <FlatList
-      data={data}
+      data={filteredProducts}
       renderItem={({ item }) => <ProductItem product={item} />}
       ItemSeparatorComponent={ProductItemSeparator}
       keyExtractor={item => item.id}

@@ -13,7 +13,7 @@ export default function ProductItem({ product }: ProductItemProps) {
   const navigation = useNavigationProducts();
   return (
     <Pressable
-      style={styles.root}
+      style={({ pressed }) => [styles.root, pressed && styles.pressed]}
       onPress={() => navigation.navigate(ProductsRoutes.Detail, { product })}
     >
       <View>
@@ -36,5 +36,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderRadius: borderRadius.sm,
+  },
+  pressed: {
+    opacity: 0.7,
+    backgroundColor: 'rgba(0, 0, 0, 0.05)',
   },
 });
