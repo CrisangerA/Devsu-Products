@@ -2,7 +2,9 @@ import { View, StyleSheet, Pressable } from 'react-native';
 import React from 'react';
 import { Product } from '@modules/products/domain/product.model';
 import { Text } from '@components/core';
+import ChevronRightIcon from '@assets/icons/ChevronRightIcon.svg';
 import { borderRadius } from '@theme/borders';
+import { colors } from '@theme/colors';
 import { useNavigationProducts } from '@navigation/hooks/useNavigation';
 import { ProductsRoutes } from '@navigation/config/routes';
 
@@ -23,7 +25,7 @@ export default function ProductItem({ product }: ProductItemProps) {
         </Text>
       </View>
       <View>
-        <Text variant="body">👉🏼</Text>
+        <ChevronRightIcon width={20} height={20} stroke={colors.light.textSecondary} testID="ChevronRightIcon" />
       </View>
     </Pressable>
   );

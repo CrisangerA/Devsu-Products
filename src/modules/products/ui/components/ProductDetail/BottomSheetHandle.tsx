@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Pressable } from 'react-native';
 
 import { colors } from '@theme/colors';
-import { Button } from '@components/core';
+import CloseIcon from '@assets/icons/CloseIcon.svg';
 
 interface Props {
   onPress: () => void;
@@ -11,7 +11,14 @@ interface Props {
 export default function BottomSheetHandle({ onPress }: Props) {
   return (
     <View style={styles.root}>
-      <Button title="❌" variant="ghost" onPress={onPress} />
+      <Pressable
+        onPress={onPress}
+        style={({ pressed }) => [styles.button, pressed && styles.pressed]}
+        accessibilityRole="button"
+        accessibilityLabel="Cerrar"
+      >
+        <CloseIcon width={20} height={20} stroke={colors.light.text} testID="CloseIcon" />
+      </Pressable>
     </View>
   );
 }
@@ -21,5 +28,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
     borderBottomColor: colors.light.border,
     alignItems: 'flex-end',
+  },
+  button: {
+    padding: 10,
+  },
+  pressed: {
+    opacity: 0.6,
   },
 });

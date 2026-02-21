@@ -46,7 +46,7 @@ export const BottomSheetDelete = forwardRef<
       ref={ref}
       index={-1}
       enablePanDownToClose
-      snapPoints={['1%', '35%', '37%']}
+      snapPoints={['1%', '37%', '40%']}
       backdropComponent={renderBackdrop}
       handleComponent={handleComponent}
     >
