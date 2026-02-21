@@ -17,6 +17,17 @@ bun install
 npm install
 ```
 
+## Step 0.1: Config constants (environment variables)
+
+Archivo de rutas en: [src/config/api.routes.ts](src/config/api.routes.ts)
+
+```ts
+export const API_ROUTES = {
+  ROOT: 'http://192.168.0.14:3002/bp',
+  PRODUCTS: '/products',
+};
+```
+
 ## Step 1: Start Metro
 
 First, you will need to run **Metro**, the JavaScript build tool for React Native.
