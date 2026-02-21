@@ -1,6 +1,23 @@
 const View = require('react-native').View;
 const Animated = require('react-native').Animated;
 
+// Chainable builder mock for layout animations (FadeInUp, FadeInDown, FadeOut, etc.)
+function createLayoutAnimationMock() {
+  const mock = {
+    delay: () => mock,
+    duration: () => mock,
+    easing: () => mock,
+    springify: () => mock,
+    damping: () => mock,
+    stiffness: () => mock,
+    withInitialValues: () => mock,
+    withCallback: () => mock,
+    randomDelay: () => mock,
+    build: () => () => ({ initialValues: {}, animations: {} }),
+  };
+  return mock;
+}
+
 module.exports = {
   ...Animated,
   View,
@@ -23,6 +40,21 @@ module.exports = {
   useAnimatedScrollHandler: () => ({}),
   useDerivedValue: fn => ({ value: fn() }),
   interpolate: () => 0,
+  interpolateColor: () => 'transparent',
   Extrapolate: { CLAMP: 'clamp' },
   createAnimatedComponent: Component => Component,
+  // Layout animations
+  FadeIn: createLayoutAnimationMock(),
+  FadeOut: createLayoutAnimationMock(),
+  FadeInUp: createLayoutAnimationMock(),
+  FadeInDown: createLayoutAnimationMock(),
+  FadeInLeft: createLayoutAnimationMock(),
+  FadeInRight: createLayoutAnimationMock(),
+  FadeOutUp: createLayoutAnimationMock(),
+  FadeOutDown: createLayoutAnimationMock(),
+  SlideInRight: createLayoutAnimationMock(),
+  SlideInLeft: createLayoutAnimationMock(),
+  SlideOutRight: createLayoutAnimationMock(),
+  SlideOutLeft: createLayoutAnimationMock(),
+  Layout: createLayoutAnimationMock(),
 };
