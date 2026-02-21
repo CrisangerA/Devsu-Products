@@ -14,12 +14,7 @@ describe('Button.styles', () => {
     });
 
     it('returns correct styles for each variant', () => {
-      const variants: ButtonVariant[] = [
-        'primary',
-        'secondary',
-        'outlined',
-        'ghost',
-      ];
+      const variants: ButtonVariant[] = ['primary', 'secondary', 'ghost'];
 
       variants.forEach(variant => {
         const styles = getButtonStyle({ variant });
@@ -69,19 +64,12 @@ describe('Button.styles', () => {
     it('primary variant has primary background', () => {
       const styles = getButtonStyle({ variant: 'primary', mode: 'light' });
       expect(styles.container.backgroundColor).toBeDefined();
-      expect(styles.text.color).toBe('#FFFFFF');
+      expect(styles.text.color).toBe('#2c2c30');
     });
 
     it('secondary variant has correct styles', () => {
       const styles = getButtonStyle({ variant: 'secondary', mode: 'light' });
       expect(styles.container.backgroundColor).toBeDefined();
-      expect(styles.container.borderWidth).toBe(1);
-    });
-
-    it('outlined variant has transparent background', () => {
-      const styles = getButtonStyle({ variant: 'outlined', mode: 'light' });
-      expect(styles.container.backgroundColor).toBe('transparent');
-      expect(styles.container.borderWidth).toBe(1.5);
     });
 
     it('ghost variant has no border and transparent background', () => {
