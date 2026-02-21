@@ -7,6 +7,16 @@
 - Android Studio v2024.3.2 Patch 1
 - Xcode v26.1.1
 
+## Step 0: Install dependencies
+
+```sh
+# Using bun
+bun install
+
+# OR using npm
+npm install
+```
+
 ## Step 1: Start Metro
 
 First, you will need to run **Metro**, the JavaScript build tool for React Native.
