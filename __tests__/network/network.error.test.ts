@@ -41,4 +41,91 @@ describe('manageAxiosError', () => {
     const result = manageAxiosError('string error');
     expect(result.message).toBe(AXIOS_MESSAGES.UNKNOWN_ERROR);
   });
+
+  describe('400 status errors', () => {
+    it('returns FormError with errors array stringified', () => {
+      const error = new AxiosError('Bad Request', 'ERR_BAD_REQUEST');
+      error.status = 400;
+      error.response = {
+        data: {
+          errors: [
+            {
+              property: 'name',
+              constraints: { isNotEmpty: 'name should not be empty' },
+            },
+          ],
+        },
+      } as never;
+
+      const result = manageAxiosError(error);
+
+      expect(result.name).toBe('FormError');
+      expect(result.message).toContain('name should not be empty');
+    });
+
+    it('returns DuplicateIdentifierError for duplicate identifier', () => {
+      const error = new AxiosError('Bad Request', 'ERR_BAD_REQUEST');
+      error.status = 400;
+      error.response = {
+        data: {
+          message: 'Duplicate identifier: ID already exists',
+        },
+      } as never;
+
+      const result = manageAxiosError(error);
+
+      expect(result.name).toBe('DuplicateIdentifierError');
+      expect(result.message).toBe('Duplicate identifier: ID already exists');
+    });
+
+    it('returns BAD_REQUEST message for 400 without errors or duplicate', () => {
+      const error = new AxiosError('Bad Request', 'ERR_BAD_REQUEST');
+      error.status = 400;
+      error.response = {
+        data: {},
+      } as never;
+
+      const result = manageAxiosError(error);
+
+      expect(result.message).toBe(AXIOS_MESSAGES.BAD_REQUEST);
+    });
+
+    it('returns FormError with date_release property mapped correctly', () => {
+      const error = new AxiosError('Bad Request', 'ERR_BAD_REQUEST');
+      error.status = 400;
+      error.response = {
+        data: {
+          errors: [
+            {
+              property: 'date_release',
+              constraints: { isDate: 'date_release must be a date' },
+            },
+          ],
+        },
+      } as never;
+
+      const result = manageAxiosError(error);
+
+      expect(result.name).toBe('FormError');
+    });
+
+    it('returns FormError with date_revision property mapped correctly', () => {
+      const error = new AxiosError('Bad Request', 'ERR_BAD_REQUEST');
+      error.status = 400;
+      error.response = {
+        data: {
+          errors: [
+            {
+              property: 'date_revision',
+              constraints: { isDate: 'date_revision must be a date' },
+            },
+          ],
+        },
+      } as never;
+
+      const result = manageAxiosError(error);
+
+      expect(result.name).toBe('FormError');
+    });
+  });
 });

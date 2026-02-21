@@ -54,7 +54,7 @@ const lightColors: Colors = {
   background: '#FFFFFF',
   surface: '#e9ecf3',
   border: '#94979bff',
-  text: '#2c2c30;',
+  text: '#2c2c30',
   textSecondary: '#64748B',
   primary: '#FFD60A',
   success: '#10B981',
